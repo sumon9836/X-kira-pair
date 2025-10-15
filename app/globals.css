@@ -662,7 +662,7 @@ body::after {
     opacity: 0.3;
 }
 
-/* Ultra-Smooth Country Code Display */
+/* Ultra-Smooth Country Code Display - Transparent with no color changes */
 .country-code-display {
     position: absolute;
     left: 12px;
@@ -676,17 +676,14 @@ body::after {
     font-weight: 700;
     font-size: 0.9rem;
     white-space: nowrap;
-    background: linear-gradient(135deg, 
-        var(--pink-primary), 
-        var(--pink-secondary));
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: 
-        0 8px 25px rgba(255, 27, 107, 0.3),
-        0 4px 15px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     padding: 8px 12px;
     display: flex;
     align-items: center;
@@ -705,47 +702,75 @@ body::after {
 }
 
 .country-flag {
-    font-size: 1rem;
-    animation: none;
+    font-size: 1.2rem;
+    animation: flagSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes flagSlideIn {
+    0% {
+        transform: translateX(-20px) scale(0.5);
+        opacity: 0;
+    }
+    60% {
+        transform: translateX(5px) scale(1.1);
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
 }
 
 .country-code-display.show {
     transform: translateY(-50%) translateX(0);
     opacity: 1;
+    animation: countryCodeSlide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes countryCodeSlide {
+    0% {
+        transform: translateY(-50%) translateX(-100px) scale(0.8);
+        opacity: 0;
+    }
+    60% {
+        transform: translateY(-50%) translateX(5px) scale(1.05);
+    }
+    100% {
+        transform: translateY(-50%) translateX(0) scale(1);
+        opacity: 1;
+    }
 }
 
 .country-code-display.detected {
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.25);
     box-shadow: 
-        0 0 20px var(--pink-glow),
-        0 8px 25px rgba(255, 27, 107, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        0 0 15px rgba(255, 255, 255, 0.1),
+        0 4px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .country-code-display.complete {
-    background: linear-gradient(135deg, 
-        var(--pink-primary), 
-        var(--blue-primary));
-    border-color: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 
-        0 0 25px var(--pink-glow),
-        0 10px 30px rgba(255, 27, 107, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    transform: translateY(-50%) translateX(0) scale(1.02);
+        0 0 20px rgba(255, 255, 255, 0.15),
+        0 6px 25px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) translateX(0) scale(1.05);
 }
 
 .country-code-display.focused {
-    transform: translateY(-50%) translateX(0) scale(1.02);
-    box-shadow: 0 0 20px var(--pink-glow);
+    transform: translateY(-50%) translateX(0) scale(1.05);
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.15),
+        0 6px 25px rgba(0, 0, 0, 0.2);
 }
 
 .country-code-display:hover {
-    transform: translateY(-50%) translateX(0) scale(1.03);
-    background: linear-gradient(135deg, 
-        rgba(255, 27, 107, 0.15), 
-        rgba(0, 212, 255, 0.08));
-    border-color: var(--pink-primary);
-    box-shadow: 0 0 25px var(--pink-glow);
+    transform: translateY(-50%) translateX(0) scale(1.08);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 
+        0 0 25px rgba(255, 255, 255, 0.2),
+        0 8px 30px rgba(0, 0, 0, 0.25);
 }
 
 /* Enhanced Clean Input Field */

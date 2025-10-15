@@ -28,15 +28,6 @@ export function Header({ onRefresh, showRefreshButton = false }: HeaderProps) {
             <i className="fab fa-whatsapp"></i>
             <span className="support-text">Support</span>
           </a>
-          {showRefreshButton && onRefresh && (
-            <button 
-              onClick={onRefresh}
-              className="btn btn-secondary" 
-              title="Refresh Sessions"
-            >
-              <i className="fas fa-sync-alt"></i>
-            </button>
-          )}
         </div>
       </div>
     </header>

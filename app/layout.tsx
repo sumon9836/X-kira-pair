@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import './fonts.css';
 
@@ -35,6 +36,7 @@ export default function RootLayout({
         <div className="container">
           {children}
         </div>
+        <Script src="/scroll-animations.js" strategy="afterInteractive" />
       </body>
     </html>
   );

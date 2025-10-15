@@ -11,11 +11,16 @@ export function Header({ onRefresh, showRefreshButton = false }: HeaderProps) {
       <div className="header-content">
         <div className="header-left">
           <i className="fab fa-whatsapp header-icon"></i>
-          <div>
-            <h1>𝐊ąìʂҽղ-𝐌𝐃</h1>
-            <p className="header-subtitle">Advanced Bot Management</p>
-            <p className="developer-credit">Powered by Sumon Developer</p>
-          </div>
+          <a 
+            href="https://x-kira-html.vercel.app/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="btn btn-secondary"
+            style={{ marginLeft: '12px' }}
+          >
+            <i className="fas fa-arrow-left"></i>
+            <span>Back to Dashboard</span>
+          </a>
         </div>
         <div className="header-right">
           <a 

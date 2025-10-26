@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    BACKEND_URL: process.env.BACKEND_URL || 'http://tramway.proxy.rlwy.net:12332',
+    BACKEND_URL: process.env.BACKEND_URL || 'http://shinkansen.proxy.rlwy.net:55812',
   },
   // Replit and Vercel proxy configuration
   async rewrites() {

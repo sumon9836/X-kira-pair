@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { createProxy } from '../../../lib/proxy';
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://tramway.proxy.rlwy.net:12332';
+const BACKEND_URL = process.env.BACKEND_URL || 'http://shinkansen.proxy.rlwy.net:55812';
 
 // Internal function to check if a number is blocked
 async function isNumberBlocked(number: string): Promise<boolean> {

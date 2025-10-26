@@ -4,7 +4,9 @@ This is a modern WhatsApp bot management dashboard built with Next.js that provi
 
 **Status**: ✅ **Fully Functional** - Successfully migrated from Vercel to Replit environment with all features working perfectly.
 
-**Recent Migration**: October 15, 2025 - Migrated from Vercel to Replit with proper configuration for the Replit environment.
+**Recent Updates**:
+- **October 26, 2025**: Fixed 409 error handling for already-connected phone numbers with improved user feedback and request deduplication
+- **October 15, 2025**: Migrated from Vercel to Replit with proper configuration for the Replit environment
 
 # User Preferences
 
@@ -23,7 +25,11 @@ Preferred communication style: Simple, everyday language.
 - **API Architecture**: RESTful API endpoints using Next.js API routes as proxy layer
 - **Proxy Pattern**: All API calls are proxied through Next.js to a backend service running on Railway
 - **Authentication**: Cookie-based authentication for admin features with session management
-- **Error Handling**: Comprehensive error handling with user-friendly toast notifications
+- **Error Handling**: 
+  - Comprehensive error handling with user-friendly toast notifications
+  - Status-aware error responses with HTTP status codes passed to frontend
+  - Special handling for 409 Conflict errors (already-connected numbers)
+  - Request deduplication to prevent multiple rapid submissions
 
 ## Core Features
 - **Phone Number Management**: Smart country detection with international phone number validation

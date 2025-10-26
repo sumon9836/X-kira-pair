@@ -131,8 +131,6 @@ export function PairForm({ onSuccess, showToast }: PairFormProps) {
           router.push('/blocked');
         } else if (errorMsg.includes('already connected') || errorMsg.includes('already in use')) {
           showToast?.('Already Connected', 'This number is already connected. Please logout from your bot first and try again.', 'warning');
-        } else if (errorMsg.includes('pairing') || errorMsg.includes('in progress')) {
-          showToast?.('Pairing in Progress', 'A pairing process is already running for this number. Please wait or try again later.', 'warning');
         } else {
           showToast?.('Pairing Failed', errorMsg, 'error');
         }
@@ -147,8 +145,6 @@ export function PairForm({ onSuccess, showToast }: PairFormProps) {
         const errorData = error?.response?.data;
         if (errorData?.connected) {
           showToast?.('Already Connected', 'This number is already connected. Please logout from your bot first and try again.', 'warning');
-        } else if (errorData?.connecting || errorData?.pairing) {
-          showToast?.('Pairing in Progress', 'A pairing process is already running for this number. Please wait or try again later.', 'warning');
         } else {
           showToast?.('Number Conflict', errorData?.message || 'This number is already in use', 'warning');
         }

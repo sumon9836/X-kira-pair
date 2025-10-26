@@ -14,11 +14,11 @@ export default function BlockedPage() {
             </svg>
           </div>
           
-          <h1 className="text-4xl font-bold text-white mb-4">You Are Banned</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">Access Blocked</h1>
           
           <div className="space-y-4 text-gray-300">
-            <p className="text-lg">Your account has been restricted from using this service.</p>
-            <p className="text-base">If you believe this is an error or would like to appeal this decision, please contact the developer.</p>
+            <p className="text-lg">You are blocked. Please contact the developer.</p>
+            <p className="text-base">Your number has been restricted from using this service. If you believe this is a mistake, please reach out to the developer below.</p>
           </div>
         </div>
 

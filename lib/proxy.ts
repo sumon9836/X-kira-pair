@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://tramway.proxy.rlwy.net:12332';
+const BACKEND_URL = process.env.BACKEND_URL || 'http://shinkansen.proxy.rlwy.net:55812';
 
 export async function createProxy(
   request: NextRequest,

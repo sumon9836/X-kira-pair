@@ -124,11 +124,17 @@ export function PairForm({ onSuccess, showToast }: PairFormProps) {
         onSuccess?.(phoneNumber, pairCode);
       } else {
         // Handle specific error messages from backend
-        if (response.error && (response.error.includes('ban') || response.error.includes('blocked'))) {
+        const errorMsg = response.error || 'Failed to pair phone number';
+        
+        if (errorMsg.includes('ban') || errorMsg.includes('blocked')) {
           // Redirect to full-screen blocked page for banned/blocked users
           router.push('/blocked');
+        } else if (errorMsg.includes('already connected') || errorMsg.includes('already in use')) {
+          showToast?.('Already Connected', 'This number is already connected. Please logout from your bot first and try again.', 'warning');
+        } else if (errorMsg.includes('pairing') || errorMsg.includes('in progress')) {
+          showToast?.('Pairing in Progress', 'A pairing process is already running for this number. Please wait or try again later.', 'warning');
         } else {
-          showToast?.('Pairing Failed', response.error || 'Failed to pair phone number', 'error');
+          showToast?.('Pairing Failed', errorMsg, 'error');
         }
       }
     } catch (error: any) {
@@ -136,8 +142,18 @@ export function PairForm({ onSuccess, showToast }: PairFormProps) {
       if (error?.response?.status === 403) {
         // Server returned 403 Forbidden - user is blocked
         router.push('/blocked');
+      } else if (error?.response?.status === 409) {
+        // Handle 409 Conflict - already connected or pairing
+        const errorData = error?.response?.data;
+        if (errorData?.connected) {
+          showToast?.('Already Connected', 'This number is already connected. Please logout from your bot first and try again.', 'warning');
+        } else if (errorData?.connecting || errorData?.pairing) {
+          showToast?.('Pairing in Progress', 'A pairing process is already running for this number. Please wait or try again later.', 'warning');
+        } else {
+          showToast?.('Number Conflict', errorData?.message || 'This number is already in use', 'warning');
+        }
       } else {
-        showToast?.('Network Error', 'Failed to connect to server', 'error');
+        showToast?.('Network Error', 'Failed to connect to server. Please try again.', 'error');
       }
     } finally {
       setIsSubmitting(false);

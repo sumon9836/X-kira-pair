@@ -92,6 +92,10 @@ export function PairForm({ onSuccess, showToast }: PairFormProps) {
       return;
     }
 
+    if (isSubmitting) {
+      return;
+    }
+
     setIsSubmitting(true);
     setCurrentNumber(phoneNumber);
 
@@ -102,9 +106,6 @@ export function PairForm({ onSuccess, showToast }: PairFormProps) {
         // Show pairing code or WhatsApp link
         const pairingData = response.data as PairingResponse;
         const pairCode = pairingData?.code || pairingData?.pairCode;
-        
-        console.log('API Response:', response);
-        console.log('Extracted pairing code:', pairCode);
         
         // Always show the modal for successful pairing - even if no code
         setPairCodeData({
@@ -125,32 +126,18 @@ export function PairForm({ onSuccess, showToast }: PairFormProps) {
       } else {
         // Handle specific error messages from backend
         const errorMsg = response.error || 'Failed to pair phone number';
+        const statusCode = response.statusCode || response.response?.status;
         
-        if (errorMsg.includes('ban') || errorMsg.includes('blocked')) {
-          // Redirect to full-screen blocked page for banned/blocked users
+        if (statusCode === 403 || errorMsg.includes('ban') || errorMsg.includes('blocked')) {
           router.push('/blocked');
-        } else if (errorMsg.includes('already connected') || errorMsg.includes('already in use')) {
-          showToast?.('Already Connected', 'This number is already connected. Please logout from your bot first and try again.', 'warning');
+        } else if (statusCode === 409 || errorMsg.includes('already connected') || errorMsg.includes('already in use')) {
+          showToast?.('Already Connected', 'This number is already connected. Please logout from your WhatsApp bot first and try again.', 'warning');
         } else {
           showToast?.('Pairing Failed', errorMsg, 'error');
         }
       }
     } catch (error: any) {
-      // Handle network errors and HTTP error responses
-      if (error?.response?.status === 403) {
-        // Server returned 403 Forbidden - user is blocked
-        router.push('/blocked');
-      } else if (error?.response?.status === 409) {
-        // Handle 409 Conflict - already connected or pairing
-        const errorData = error?.response?.data;
-        if (errorData?.connected) {
-          showToast?.('Already Connected', 'This number is already connected. Please logout from your bot first and try again.', 'warning');
-        } else {
-          showToast?.('Number Conflict', errorData?.message || 'This number is already in use', 'warning');
-        }
-      } else {
-        showToast?.('Network Error', 'Failed to connect to server. Please try again.', 'error');
-      }
+      showToast?.('Network Error', 'Failed to connect to server. Please try again.', 'error');
     } finally {
       setIsSubmitting(false);
     }

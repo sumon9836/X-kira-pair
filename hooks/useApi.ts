@@ -38,7 +38,15 @@ export function useApi() {
         setError(errorMessage);
         onError?.(errorMessage);
         showToast?.('Request Failed', errorMessage, 'error');
-        return { success: false, error: errorMessage };
+        return { 
+          success: false, 
+          error: errorMessage,
+          statusCode: response.status,
+          response: {
+            status: response.status,
+            data: data
+          }
+        };
       }
 
       onSuccess?.(data);

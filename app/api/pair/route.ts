@@ -69,8 +69,14 @@ export async function GET(request: NextRequest) {
     const result = await response.json();
 
     if (!response.ok) {
+      let errorMessage = result.error || 'Failed to get pairing code';
+      
+      if (response.status === 409) {
+        errorMessage = 'This number is already connected. Please logout from your WhatsApp bot first, then try again.';
+      }
+      
       return Response.json(
-        { success: false, error: result.error || 'Failed to get pairing code' },
+        { success: false, error: errorMessage, statusCode: response.status },
         { status: response.status }
       );
     }
@@ -120,8 +126,14 @@ export async function POST(request: NextRequest) {
       const result = await response.json();
 
       if (!response.ok) {
+        let errorMessage = result.error || 'Failed to get pairing code';
+        
+        if (response.status === 409) {
+          errorMessage = 'This number is already connected. Please logout from your WhatsApp bot first, then try again.';
+        }
+        
         return Response.json(
-          { success: false, error: result.error || 'Failed to get pairing code' },
+          { success: false, error: errorMessage, statusCode: response.status },
           { status: response.status }
         );
       }

@@ -37,6 +37,11 @@ export interface ApiResponse<T = any> {
   data?: T;
   error?: string;
   message?: string;
+  statusCode?: number;
+  response?: {
+    status: number;
+    data: any;
+  };
 }
 
 export interface ToastMessage {

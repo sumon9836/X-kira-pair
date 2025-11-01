@@ -4,7 +4,7 @@
 import Link from 'next/link';
 
 export default function BlockedPage() {
-  const developerWhatsApp = "+917003815486";
+  const developerWhatsApp = "+917003816486";
   const whatsappLink = `https://wa.me/${developerWhatsApp.replace(/[^0-9]/g, '')}?text=Hello,%20I%20am%20contacting%20you%20regarding%20my%20blocked%20access%20to%20the%20WhatsApp%20Bot%20Dashboard.`;
 
   return (
